@@ -1,0 +1,9 @@
+OLÁ USUARIO.
+
+<ul>
+    <?php foreach ($this->usuarios as $user): ?>
+        <li>
+            <?php echo $user->getLogin() . " -- " . $user->getEmail() ?>
+        </li>
+    <?php endforeach; ?>
+</ul>

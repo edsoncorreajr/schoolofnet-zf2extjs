@@ -1,0 +1,27 @@
+<h3>USUARIOS</h3>  
+<div >
+    <a href="<?= $this->url('usuario-admin', ['controller' => 'usuarios',
+                'action' => 'adicionar']) ?>" class="btn btn-primary btn-xs"> Novo </a>
+    <table class="table">
+        <thead>
+        <th>ID</th> 
+        <th>CPF</th>
+        <th>Login</th>
+        <th>Email</th>
+        <th>Açao</th>
+        </thead>
+        <tbody>
+        <?php foreach ($this->data as $user): ?>
+            <tr >
+                <td><?= $user->getIdUsuario() ?></td>
+                <td><?= $user->getCpf() ?></td>
+                <td><?= $user->getLogin() ?></td>
+                <td><?= $user->getEmail()  ?></td>
+                <td><a href="#" class="btn btn-primary btn-xs"> Editar </a>
+                    <a href="#" class="btn btn-danger btn-xs"> Deletar </a>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
