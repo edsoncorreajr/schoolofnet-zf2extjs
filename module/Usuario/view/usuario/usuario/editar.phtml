@@ -1,0 +1,16 @@
+<h3>CADASTRO DE USUARIOS</h3>  
+
+<?php
+$form = $this->form;
+
+$form->prepare();
+$form->setAttribute(
+        'action', $this->url('usuario-admin', ['controller' => 'usuarios',
+            'action' => 'editar']
+        )
+);
+
+echo $this->form()->openTag($form);
+//    echo $this->formCollection($form);
+echo $this->formCollection($form);
+echo $this->form()->closeTag();

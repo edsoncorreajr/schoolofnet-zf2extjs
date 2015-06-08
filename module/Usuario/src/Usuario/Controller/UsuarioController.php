@@ -14,6 +14,7 @@ class UsuarioController extends AbstractActionController
 
     /** @var $em  Doctrine\ORM\EntityManager  */
     private $em;
+
     /** @var $form  Usuario\Form\Usuario  */
     private $form;
 
@@ -36,7 +37,7 @@ class UsuarioController extends AbstractActionController
     public function adicionarAction()
     {
         $form = $this->form;
-        
+
         $request = $this->getRequest();
 
         if ($request->isPost()) {
@@ -47,7 +48,7 @@ class UsuarioController extends AbstractActionController
 
                 /** @var $usuarioService Usuario\Service\Usuario */
                 $usuarioService = $this->getServiceLocator()->get('UsuarioService');
-                $result = $usuarioService->inserir($form->getData());
+                $result         = $usuarioService->inserir($form->getData());
 
                 if ($result) {
                     return $this->redirect()->toRoute(
@@ -60,6 +61,52 @@ class UsuarioController extends AbstractActionController
         return new ViewModel([
             'form' => $form
         ]);
+    }
+
+    public function editarAction()
+    {
+        $form    = $this->form;
+        $request = $this->getRequest();
+
+        $repository = $this->getEm()->getRepository("Usuario\Entity\Usuario");
+
+        /** @var $entity  Usuario\Entity\Usuario     */
+        $entity = $repository->find($this->params()->fromRoute('id', 0));
+
+        if ($entity) {
+            $form->setData($entity->toArray());
+        }
+
+        if ($request->isPost()) {
+            $form->setData($request->getPost());
+
+            if ($form->isValid()) {
+                /** @var $usuarioService Usuario\Service\Usuario */
+                $usuarioService = $this->getServiceLocator()->get('UsuarioService');
+                $result         = $usuarioService->update($form->getData());
+
+                if ($result) {
+                    return $this->redirect()->toRoute(
+                                    'usuario-admin', array('controller' => 'usuarios')
+                    );
+                }
+            }
+        }
+
+        return new ViewModel([
+            'form' => $form
+        ]);
+    }
+
+    public function deletarAction()
+    {
+        /** @var $usuarioService Usuario\Service\Usuario */
+        $usuarioService = $this->getServiceLocator()->get('UsuarioService');
+        if ($usuarioService->delete($this->params()->fromRoute('id', 0))) {
+            return $this->redirect()->toRoute(
+                            'usuario-admin', array('controller' => 'usuarios')
+            );
+        }
     }
 
     /**

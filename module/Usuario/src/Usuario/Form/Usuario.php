@@ -14,15 +14,15 @@ class Usuario extends Form {
             'class' => 'form-horizontal',
         ]);
 
-//        $idUsuario = new \Zend\Form\Element\Hidden('idUsuario');
+//        $idUsuario = new \Zend\Form\Element\Hidden('idusuario');
 //        $this->add($idUsuario);
 
         $this->add(
                 array(
-                    'name'       => 'idUsuario',
+                    'name'       => 'idusuario',
                     'type'       => 'Zend\Form\Element\Hidden',
                     'attributes' => array(
-                        'id'       => 'idUsuario',
+                        'id'       => 'idusuario',
                     )
                 )
         );

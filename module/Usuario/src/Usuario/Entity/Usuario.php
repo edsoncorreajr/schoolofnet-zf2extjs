@@ -3,6 +3,7 @@
 namespace Usuario\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Zend\Stdlib\Hydrator\ClassMethods;
 
 /**
  * @ORM\Entity
@@ -17,82 +18,82 @@ class Usuario {
      * @ORM\Column(type="integer", name="user_id")
      * @ORM\GeneratedValue
      *
-     * @var int $idUsuario
+     * @var int $idusuario
      */
-    private $idUsuario;
+    protected $idusuario;
 
     /**
      * @ORM\Column(type="string", name="user_cpf",length=14,  unique=true)
      * @var string $cpf
      */
-    private $cpf;
+    protected $cpf;
 
     /**
      * @ORM\Column(type="string", name="user_login", length=10)
      * @var string $login
      */
-    private $login;
+    protected $login;
 
     /**
      * @ORM\Column(type="string", name="user_senha", length=100)
      * @var string $senha
      */
-    private $senha;
+    protected $senha;
 
     /**
      * @ORM\Column(type="string", name="user_email", length=100)
      * @var string $email
      */
-    private $email;
+    protected $email;
 
     /**
      * @ORM\Column(type="smallint", name="user_nivel", columnDefinition="TINYINT DEFAULT '6'")
      * @var int $userNivel
      */
-    private $userNivel;
+    protected $userNivel;
 
     /**
      * @ORM\Column(type="smallint", name="user_nivel_mat", columnDefinition="TINYINT DEFAULT '6'")
      * @var int $nivelMat
      */
-    private $nivelMat;
+    protected $nivelMat;
 
     /**
      * @ORM\Column(type="smallint", name="user_nivel_cursos",  columnDefinition="TINYINT DEFAULT '6'")
      * @var int $nivelCursos
      */
-    private $nivelCursos;
+    protected $nivelCursos;
 
     /**
      * @ORM\Column(type="smallint", name="user_nivel_sysbmccb", columnDefinition="TINYINT DEFAULT '60'")
      * @var int $nivelSysbm
      */
-    private $nivelSysbm;
+    protected $nivelSysbm;
 
     /**
      * @ORM\Column(type="smallint", name="user_permissao_sysbmccb", columnDefinition="TINYINT DEFAULT '3'")
      * @var int $permissaoSysbm
      */
-    private $permissaoSysbm;
+    protected $permissaoSysbm;
 
     /**
      * @ORM\Column(type="smallint", name="user_active", columnDefinition="TINYINT DEFAULT '1'")
      * @var int $active
      */
-    private $active;
+    protected $active;
 
     /**
      * @ORM\Column(type="string", name="user_random_key", length=40)
      * @var string $randomKey
      */
-    private $randomKey;
+    protected $randomKey;
 
     /**
      * @ORM\Column(type="datetime", name="user_regtime", nullable=false)
      *
-     * @var datetime $regtime
+     * @var $regtime /Datetim
      */
-    private $regtime;
+    protected $regtime;
 
     /**
      * @ORM\Column(type="string", name="user_salt")
@@ -117,6 +118,7 @@ class Usuario {
         $this->nivelSysbm = 60;
         $this->permissaoSysbm = 3;
         $this->randomKey = md5($this->email.$this->salt);
+        $this->setActive(true);
 
     }
 
@@ -124,8 +126,8 @@ class Usuario {
      *
      * @return int idusuario
      */
-    public function getIdUsuario() {
-        return $this->idUsuario;
+    public function getIdusuario() {
+        return $this->idusuario;
     }
 
     /**
@@ -213,8 +215,8 @@ class Usuario {
      * @param int $idUsuario
      * @return self
      */
-    public function setIdUsuario($idUsuario) {
-        $this->idUsuario = $idUsuario;
+    public function setIdusuario($idUsuario) {
+        $this->idusuario = $idUsuario;
         return $this;
     }
 
@@ -388,6 +390,16 @@ class Usuario {
     public function setPermissaoSysbm($permissaoSysbm) {
         $this->permissaoSysbm = $permissaoSysbm;
         return $this;
+    }
+    
+    /**
+     * 
+     * @return array
+     */
+    public function toArray()
+    {
+        return (new ClassMethods)->extract($this);
+        
     }
 
 }

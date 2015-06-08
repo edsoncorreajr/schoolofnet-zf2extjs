@@ -13,9 +13,7 @@ class IndexController extends AbstractActionController {
          */
         $em = $this->getServiceLocator()->get('\Doctrine\ORM\EntityManager');
 
-        /**
-         * @var $usuariosRepository \Doctrine\ORM\EntityRepository
-         */
+        /** @var $usuariosRepository \Doctrine\ORM\EntityRepository   */
         $usuariosRepository = $em->getRepository("Usuario\Entity\Usuario")
                 ->findAll();
 //        // FindBy pesquisa campo da Entity e não da tabela no BD
